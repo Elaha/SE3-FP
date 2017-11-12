@@ -53,12 +53,14 @@
 ; Aufabe 2.1
 ; Eine Funktion, die die Fakultät zu einer gegebenen natürlichen Zahl berechnet.
 ; n stellt hierbei die natürliche Zahl dar, die übergeben wird.
-(define (Fakultät n)
+(define (factorial n)
+  (letrec ([calculate-factorial (lambda (m)
+                                  (if (= m 0)
+                                      1
+                                      (* m (calculate-factorial (- m 1)))))])
   (if (< n 0)
-      "Zahl darf nicht kleiner als 0 sein"
-      (if (= n 0)
-          1
-          (* n (Fakultät (- n 1))))))
+      (error "Fakultäten können nicht für negative Zahlen berechnet werden.")
+      (calculate-factorial n))))
 
 ; Aufgabe 2.2
 ; Berchnung von der Potenzfunktion r hoch n.
