@@ -54,9 +54,11 @@
 ; Eine Funktion, die die Fakultät zu einer gegebenen natürlichen Zahl berechnet.
 ; n stellt hierbei die natürliche Zahl dar, die übergeben wird.
 (define (Fakultät n)
- (if (= n 0)
-     1
-  (* n (Fakultät (- n 1)))))
+  (if (< n 0)
+      "Zahl darf nicht kleiner als 0 sein"
+   (if (= n 0)
+       1
+       (* n (Fakultät (- n 1))))))
 
 ; Aufgabe 2.2
 ; Berchnung von der Potenzfunktion r hoch n.
