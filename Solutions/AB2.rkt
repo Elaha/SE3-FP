@@ -56,9 +56,9 @@
 (define (Fakultät n)
   (if (< n 0)
       "Zahl darf nicht kleiner als 0 sein"
-   (if (= n 0)
-       1
-       (* n (Fakultät (- n 1))))))
+      (if (= n 0)
+          1
+          (* n (Fakultät (- n 1))))))
 
 ; Aufgabe 2.2
 ; Berchnung von der Potenzfunktion r hoch n.
@@ -70,7 +70,7 @@
       (if(odd? n)
           (* r (power r (- n 1)))
 
-          (sqr(power r (/ n 2))))))
+          (sqr (power r (/ n 2))))))
 
 ; Aufgabe 2.3
 
