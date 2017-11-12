@@ -79,15 +79,15 @@
 ; Weist Eingabe einem bestimmten Typen zu und gibt diesen wieder.
 ; x steht hierbei für die Eingabe.
 (define (type-of x)
-  (cond [(boolean? x) "x = boolean"]
-        [(symbol? x) "x = symbol"]
-        [(number? x) "x = number"]
-        [(pair? x) "x = pair"]
-        [(list? x) "x = list"]
-        [(char? x) "x = char"]
-        [(string? x) "x = string"]
-        [(vector? x) "x = vector"]
-        [(procedure? x) "x = procedure"]))
+  (cond [(boolean? x) "boolean"]
+        [(symbol? x) "symbol"]
+        [(number? x) "number"]
+        [(pair? x) "pair"]
+        [(list? x) "list"]
+        [(char? x) "char"]
+        [(string? x) "string"]
+        [(vector? x) "vector"]
+        [(procedure? x) "procedure"]))
 
 ; 1. (type-of (* 2 3 4))            --> x = number /Denn in diesem Fall ist X eine normale mathematische Auswertung dessen Ergebnis wieder eine Nummer ist.
 
