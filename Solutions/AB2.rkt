@@ -75,7 +75,19 @@
           (sqr (power r (/ n 2))))))
 
 ; Aufgabe 2.3
-
+(define euler
+  (letrec
+      ([calculate-fractures (lambda (e)
+                                (let ([x (/ e
+                                            (factorial (- e 1)))]
+                                      [exitV (/ 1
+                                                (power 10 1000))]) ; Festlegung der Genauigkeit der Berechnung (1000 Nachkommastellen)
+                                  (if (< x exitV)
+                                      0
+                                      (+ x (calculate-fractures (+ e 1))))))])
+    (* (/ (+ (calculate-fractures 2) 1)
+          2)
+       (power 10 1001))))
 
 ; Aufgabe 3
 ; Weist Eingabe einem bestimmten Typen zu und gibt diesen wieder.
