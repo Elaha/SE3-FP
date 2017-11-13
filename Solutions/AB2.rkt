@@ -1,5 +1,6 @@
 #lang racket
- ; SE3 Funktionale Programmierung Blatt2
+ ; SE3 Funktionale Programmierung / Blatt2
+ ; Gruppe 5
  ; Jan Ouborny 7047561
  ; Ozan Boga 6689640
 
