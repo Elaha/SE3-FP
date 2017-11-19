@@ -1,4 +1,12 @@
 #lang racket
+
+; Aufgabe 1.1 (2.1) (3.1)
+; Wir haben uns für die Aufgaben, für die Datenstrucktur der Liste entschieden. 
+; Denn für eine Liste haben wir in Racket verschiedene Operationen, die bezüglich dieser Aufgabe sehr nützlich sein können.
+; Mit assoc können wir in einer Liste für ein "Schloss" direkt den Schlüssel finden. 
+; Durch car und cdr lässt sich eine Liste einfach rekusiv zerlegen und kann mittels cons ohne Probleme wieder zusammengefügt werden.
+; Aus diesen Gründen, werden wir fortlaufen auch für die nächsten Aufgaben, die Liste als Datenstrucktur wählen.
+
 (define buchstabentafel
   '(
    (#\A Alpha)
@@ -39,6 +47,11 @@
    (#\9 Novonine)
    (#\, Decimal)
    (#\. Stop)))
+   
+   
+; Aufgabe 1.2
+
+; Findet zu einem gegebenen Char, dass in der Liste gespeicherte Codewort
 
 (define(key->lock b)
 
@@ -46,24 +59,34 @@
   
 )
 
-(define (charlist->codewort charlist)
+; Aufgabe 1.3
+
+; Übersetzt mit Hilfe der oberen Funktion "key->lock" eine Liste aus Chars, 
+; in die entsprechenden Codewörter, welche in der Liste gespeichert sind.
+
+(define (charlist->codeword charlist)
   (if(null? charlist)
      '()
-     (cons(key->lock (car charlist)) (charlist->codewort (cdr charlist)))))
+     (cons(key->lock (car charlist)) (charlist->codeword (cdr charlist)))))
+     
 
-(define(text->codewort text)
+; Wandelt einen String in ein Codewort um.
+
+(define(text->codeword text) ; Diese Funktion nimmt einen String entgegen. 
   
-  (charlist->codewort (string->list text)))
+  (charlist->codeword (string->list text))) ; Dieser wird bei der Übergabe an unsere rekusive Funktion, zu einer Liste von Chars übersetzt.
 
 
 
                             
 
 
-;Aufgabe 2
 (require se3-bib/flaggen-module)
 
 ;Aufgabe 2.1
+;Wahl der Datenstrucktur: Liste (Aufgrund der oben genannten Gründe).
+;Auch bei dieser Aufgabe bietet sich die verwendung einer Liste an.
+
 (define flaggenalphabet
  '(
    (#\A A)
@@ -104,23 +127,30 @@
    (#\9 Z9)))
 
 ;Aufgabe 2.2
+
+; Findet zu einem übergebenden Char, die passende Flagge.
+
 (define (char->flag x)
- (eval(cadr(assoc x flaggenalphabet
-  ))))
+ (eval(cadr(assoc x flaggenalphabet))))
 
 ;Aufgabe 2.3
 
-(define (charlist->codewort2 charlist)
+; Wandelt eine Liste aus Chars, durch reksuiven Aufruf, in eine Liste aus Flaggen um.
+
+(define (charlist->flag charlist)
   (if(null? charlist)
      '()
-     (cons(char->flag (car charlist)) (charlist->codewort2 (cdr charlist)))))
+     (cons(char->flag (car charlist)) (charlist->flag (cdr charlist)))))
+
+
+; Wandelt einen String in eine Flaggencombination um.
 
 (define(text->flagcode text)
   
-  (charlist->codewort2 (string->list text)))
+  (charlist->flag (string->list text)))
 
 
-(require racket/gui/base)
+
 
 
 
