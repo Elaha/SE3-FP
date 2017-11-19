@@ -1,6 +1,13 @@
 #lang racket
 
+; SE3 Funktionale Programmierung / Blatt 3 
+; Gruppe 5
+; Jan Ouborny 7047561
+; Ozan Boga 6689640
+
+
 ; Aufgabe 1.1 (2.1) (3.1)
+
 ; Wir haben uns für die Aufgaben, für die Datenstrucktur der Liste entschieden. 
 ; Denn für eine Liste haben wir in Racket verschiedene Operationen, die bezüglich dieser Aufgabe sehr nützlich sein können.
 ; Mit assoc können wir in einer Liste für ein "Schloss" direkt den Schlüssel finden. 
@@ -80,12 +87,12 @@
 
                             
 
-
+; Aufgabe 2
 (require se3-bib/flaggen-module)
 
-;Aufgabe 2.1
-;Wahl der Datenstrucktur: Liste (Aufgrund der oben genannten Gründe).
-;Auch bei dieser Aufgabe bietet sich die verwendung einer Liste an.
+; Aufgabe 2.1
+; Wahl der Datenstrucktur: Liste (Aufgrund der oben genannten Gründe).
+; Auch bei dieser Aufgabe bietet sich die verwendung einer Liste an.
 
 (define flaggenalphabet
  '(
@@ -126,14 +133,14 @@
    (#\8 Z8)
    (#\9 Z9)))
 
-;Aufgabe 2.2
+; Aufgabe 2.2
 
 ; Findet zu einem übergebenden Char, die passende Flagge.
 
 (define (char->flag x)
  (eval(cadr(assoc x flaggenalphabet))))
 
-;Aufgabe 2.3
+; Aufgabe 2.3
 
 ; Wandelt eine Liste aus Chars, durch reksuiven Aufruf, in eine Liste aus Flaggen um.
 
@@ -155,7 +162,7 @@
 
 
 
-;Aufgabe 3
+; Aufgabe 3
 
 (require racket/gui/base)
 
