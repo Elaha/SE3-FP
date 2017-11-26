@@ -28,78 +28,101 @@
 
 
 ; Aufgabe 2.1
-; Erweiterte Backus-Naur-Form:
-
-; Überschrift       = 3 * Notzeichen, ("DELTA ECHO" | "HIER IST" )
-;                            3 * Schiffsname, Rufzeichen, Notzeichen, Schiffsname, SchiffsnameBst, Rufzeichen;
+; Erweiterte Backus-Naur-Form ISO/IEC 14977:1996(E)
+;
+; Überschrift       = 3 * (Notzeichen, Space), Newline, 
+;                         (("DELTA", Space, "ECHO") | ("HIER", Space, "IST")), Newline,
+;                         3 * (Schiffsname Space), RufzeichenBst, Newline,
+;                         Notzeichen, Space, Schiffsname, Space, ["ICH", Space, "BUCHSTABIERE"], Space, SchiffsnameBst, Newline,
+;                         ["RUFZEICHEN"], RufzeichenBst, Newline;
+; Unterschrift      = Schiffsname, Space, Rufzeichen, Newline;
 ; Standortangabe    = Satz;
 ; NotfallArt        = Satz;
 ; Hilfeleistung     = Satz;
+; Notfallzeit       = Satz;
 ; Peilzeichen       = "-";
-; Unterschrift      = Schiffsname Rufzeichen;
+
 
 ; Notzeichen        = "MAYDAY";
 ; Schiffsname       = Wort;
 ; SchiffsnameBst    = Buchstabiert;
-; Rufzeichen        = 4 * Codewort;
+; Rufzeichen        = 4 * (Buchstabe | Ziffer);
+; RufzeichenBst     = 4 * Codewort;
 
 
-
-; Satz              = Wort Satz;
+; Satz              = Wort, (Space | Newline), Satz;
 ; Wort              = ( Ziffer | Buchstabe ), { (Ziffer | Buchstabe ) };
-; Buchstabiert      = Codewort Buchstabiert;              
+; Buchstabiert      = Codewort, Space, Buchstabiert;              
 ; Buchstabe         = "a" | "b" | "c" | ... | "z" | "A" | "B" | "C" | ... | "Z";
-; Ziffer              = "0" | "1" | "2" |... | "8" | "9"; 
+; Ziffer            = "0" | "1" | "2" |... | "8" | "9";
 ; Codewort          = "Alpha" | "Bravo" |" Chrarlie" | ... | "Novonine" | "Decimal" | "Stop";
+; Space             = ? Leerzeichenzeichen ?;
+; Newline           = ? Zeilenvorschubzeichen ?;
 
-; Notmeldung          = Überschrift, Standortangabe, NotfallArt, Hilfeleistung, 2 * Pfeilzeichen, Unterschrift, "OVER";
+; Notmeldung        = Überschrift, Standortangabe, Newline,
+;                       [Notfallzeit, NewLine],
+;                       NotfallArt, Newline,
+;                       Hilfeleistung, 2 * Pfeilzeichen, Newline,
+;                       Unterschrift, Newline,
+;                       "OVER";
  
 ;Aufgabe 2.2
-(require "AB3FINAL.rkt")
-(define (Notmeldung notzeichen schiffsname rufzeichen position ArtDesNotfalls Hilfeleistung)
-  (Ueberschrift notzeichen schiffsname rufzeichen))
+;(require "AB3FP.rkt")
+(require "AB2.rkt")
+(define (notmeldung schiffsname rufzeichen position notfallArt hilfeleistung)
+  (string-upcase (string-append (ueberschrift (string-upcase schiffsname) (string-upcase rufzeichen))
+                                position "\n"
+                                notfallArt "\n"
+                                hilfeleistung "--\n"
+                                (unterschrift schiffsname rufzeichen)
+                                "\nOVER\n")))
 
+(define (string-spell string) (codewords->string (text->codeword string)))
+(define (string-no-space string) (letrec ([charlist (string->list string)]
+                                                           [rec-help (lambda (input hresult) (if (null? input)
+                                                                                              hresult
+                                                                                              (rec-help (cdr input) (if (char=? #\space (car input))
+                                                                                                                        hresult
+                                                                                                                        (string-append hresult (make-string 1 (car input)))))))])
+                                                    (rec-help charlist "")))
 
+(define (codewords->string codewords [result ""]) 
+  (if (null? codewords)
+      result
+      (codewords->string (cdr codewords) (string-append result (symbol->string (car codewords)) " "))))
 
+(define (ueberschrift schiffsname rufzeichen)
+  (string-append "MAYDAY MAYDAY MAYDAY \n"
+                 "DELTA ECHO\n"
+                 schiffsname " " schiffsname " "schiffsname " " (string-spell rufzeichen) "\n"
+                 "MAYDAY " schiffsname " " (string-spell (string-no-space schiffsname)) "\n"
+                 "RUFZEICHEN " (string-spell rufzeichen) "\n"))
+(define (unterschrift schiffsname rufzeichen)
+  (string-append schiffsname " " (string-spell rufzeichen)))
+;Aufgabe 2.3
+(display (notmeldung "Unicorn" "UCRN" "NOTFALLPOSITION UNGEFÄHR 5 SM NORDWESTLICH LEUCHTTURM ROTER SAND"
+            "SCHWERE SCHLAGSEITE WIR SINKEN\nKEINE VERLETZTEN\nSECHS MANN GEHEN IN DIE RETTUNGSINSEL\nSCHNELLE HILFE ERFORDERLICH\nICH SENDE DEN TRÄGER"
+            "SCHNELLE HILFE ERFORDERLICH "))
 
-(define (Ueberschrift notzeichen schiffsname rufzeichen)
-  (string-append notzeichen notzeichen notzeichen
-                 "\nDELTA ECHO \n"
-                 schiffsname schiffsname schiffsname
-                 (text->codeword rufzeichen)
-                 "\n"
-                 notzeichen schiffsname
-                 (text->codeword (schiffsname)
-                                 "\n"
-                                 text->codeword rufzeichen)))
+;Aufgabe 2.4
+(display (notmeldung "Nautilus" "DEYJ" "NOTFALLPOSITION 10 sm östlich Point Nemo" "Ein Riesenkrake hat das Schiff umschlungen\nEin grosses Leck im Rumpf\n20 Personen an Bord\nTreiben antriebslosan der Wasseroberfläche"
+                     "SCHNELLE HILFE ERFORDERLICH "))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+(display (notmeldung "Maltese Falcon" "HUQ9" "Auf einer Sandpark im Norden" "10 Mann an Bord\ndas Schiff ist 88m lang" "Essen erforerlich"))
 
 
 
 
 
 ; Bezugstransparenz = Ausdrücke die den selben Wert speichern können durch einander ersetzt werden.
-; innere Reduktion ist wenn die Berechnung mit den Übergebenen Werten beginnt.
-; äußere Reduktion ist wenn der Body zuerst ausgefürt wird und man für
+; Innere Reduktion ist wenn die Berechnung mit den Übergebenen Werten beginnt.
+; Äußere Reduktion ist wenn der Body zuerst ausgefürt wird und man für
 
 ; Aufgabe 3.1
 
 (define (hoch3 x) (* x x x)) (hoch3 ( + 3 (hoch3 3)))
 
-; innere Reduktion:   (Argumentauswertung --> Funtionsdefinition)
+; Innere Reduktion:   (Argumentauswertung --> Funtionsdefinition)
 ; Terme werden von innen nach außen reduziert.
  (hoch3 ( + 3 (hoch3 3)))
 ; --> (hoch3 30) //Hierbei wird als erstes der Wert der Übergeben wird ausgerechnet.
@@ -140,6 +163,7 @@
 ; demnach wesentlich effizienter.
 ; Zweiteres wird eben durch die Speziallform (worunter auch die if Operation fällt) abgedeckt.
 ; Aus diesen Gründen ist die Definition einer eigenen if Operation problematisch.
+
 
 
 
