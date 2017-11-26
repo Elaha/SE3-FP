@@ -28,39 +28,36 @@
 
 
 ; Aufgabe 2.1
+; Erweiterte Backus-Naur-Form:
 
-(require "AB3FINAL.rkt")
+; Überschrift       = 3 * Notzeichen, ("DELTA ECHO" | "HIER IST" )
+;                            3 * Schiffsname, Rufzeichen, Notzeichen, Schiffsname, SchiffsnameBst, Rufzeichen;
+; Standortangabe    = Satz;
+; NotfallArt        = Satz;
+; Hilfeleistung     = Satz;
+; Peilzeichen       = "-";
+; Unterschrift      = Schiffsname Rufzeichen;
 
-
-; <Überschrift>       ::=    <Notzeichen>  <Notzeichen>  <Notzeichen>
-;                            DELTA ECHO
-;                            <Schiffsname> <Schiffsname> <Schiffsname> <RufzeichenBst>
-;                            <Notzeichen>  <Schiffsname> <SchiffsnameBst>
-;                            <RufzeichenBst>
-; <Standortangabe>    ::=  <Satz>
-; <Art des Notfalls>  ::=  <Satz>
-; <Hilfeleistung>     ::=  <Satz>
-; <Peilzeichen>       ::=  <Satz>
-; <Unterschrift>      ::=  <Schiffsname> <RufzeichenBst>
-; <OVER>              ::=  OVER
-
-; <Notzeichen>        ::= MAYDAY
-; <Schiffsname>       ::= <Wort>
-; <SchiffsnameBst>    ::= <Buchstabiert>
-; <RufzeichenBst>     ::= <Buchstabiert>
+; Notzeichen        = "MAYDAY";
+; Schiffsname       = Wort;
+; SchiffsnameBst    = Buchstabiert;
+; Rufzeichen        = 4 * Codewort;
 
 
-; <Satz>              ::= <Wort> <Satz>
-; <Wort>              ::= <Buchstabe> <Wort>
-; <Buchstabiert>      ::= <Codewort> <Buchstabiert>
-; <Buchstaben>        ::=  "a" | "b" | "c" | ... | "z" | "A" | "B" | "C" | ... | "Z" |.
-; <Codewort>          ::= Alpha | Bravo | Chrarlie | ... | Novonine | Decimal | Stop|.
+
+; Satz              = Wort Satz;
+; Wort              = ( Ziffer | Buchstabe ), { (Ziffer | Buchstabe ) };
+; Buchstabiert      = Codewort Buchstabiert;              
+; Buchstabe         = "a" | "b" | "c" | ... | "z" | "A" | "B" | "C" | ... | "Z";
+; Ziffer              = "0" | "1" | "2" |... | "8" | "9"; 
+; Codewort          = "Alpha" | "Bravo" |" Chrarlie" | ... | "Novonine" | "Decimal" | "Stop";
+
+; Notmeldung          = Überschrift, Standortangabe, NotfallArt, Hilfeleistung, 2 * Pfeilzeichen, Unterschrift, "OVER";
  
 ;Aufgabe 2.2
-
+(require "AB3FINAL.rkt")
 (define (Notmeldung notzeichen schiffsname rufzeichen position ArtDesNotfalls Hilfeleistung)
- (Ueberschrift notzeichen schiffsname rufzeichen)
-  )
+  (Ueberschrift notzeichen schiffsname rufzeichen))
 
 
 
@@ -72,9 +69,9 @@
                  (text->codeword rufzeichen)
                  "\n"
                  notzeichen schiffsname
-                 (text->codeword(schiffsname)
-                 "\n"
-                 text->codeword rufzeichen)))
+                 (text->codeword (schiffsname)
+                                 "\n"
+                                 text->codeword rufzeichen)))
 
 
 
