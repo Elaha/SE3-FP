@@ -1,4 +1,6 @@
 #lang racket
+; Jan Ouborny 7047561
+; Ozan Boga 6689640
 
 ; Aufgabe 1
 
@@ -147,6 +149,23 @@
 
 ; Aufgabe 3.3
 
+(require racket/trace)
+
+(define (new-if condition? then-clause else-clause)
+  (cond (condition? then-clause)
+        (else else-clause)))
+
+(define (faculty product counter max-count)
+  (new-if (> counter max-count)
+          product
+          (faculty (* counter product)
+                   (+ counter 1)
+                   max-count)))
+
+(trace faculty)
+
+; Wenn man (faculty 1 1 5) eingibt, stürzt das Prgramm ab, aus dem Grund, dass kein Speicher mehr vorhanden ist.
+; Dies liegt an der Rheinfolge der Auswertung:
 ; Bei einer Spezialform, wird für diese bestimmten Operationen eine gewisser Algorithmus festgelegt.
 ; Dieser definiert für die Spezialformen, dass zuerst die Funktionsdefinition betrachtet wird und die
 ; Auswertung der Argumente verschoben wird, bzw. erst dann geschieht wenn es keine andere Option mehr gibt (lazy evaluation).
@@ -157,7 +176,7 @@
 ; Demnach wird diese Funktion wie jede andere Funktion auch "normal" ausgewertet.
 ; Bei dieser Form der Auswertung, garantiert Racket nicht, dass zuerst die Bedingung des if geprüft wird.
 ; Hier ist es so, dass bevor die Bedingung betrachtet wird, die Argumente schon vorher ausgewertet vorliegen.
-; Wenn bei faculty z.B. 115 übergeben wird, wird für jeden Fall, die Auswertung für die Argumente vorgenommen,
+; Wenn bei faculty z.B. 1 1 5 übergeben wird, wird für jeden Fall, die Auswertung für die Argumente vorgenommen,
 ; obwohl nur ein Fall eintreffen wird.
 ; Die Argumente erst beim zutreffen des Falls (also nach dem die Bedingung für das if true ist), auszuwerten ist
 ; demnach wesentlich effizienter.
