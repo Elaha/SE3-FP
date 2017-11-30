@@ -103,21 +103,29 @@
 
 ; Aufgabe 1.2
 
+(require racket/trace)
+
+; 1)
 ; Findet alle rezessiven Merkmale zu einem gegebenen Merkmal
 (define (finde-rezessive-m m)
  (cdr (member m (get-m-type-list m))))
 
-(define (get-m-type-list m) (car(memf
-                                 (lambda (arg) (member m arg))
-                                 merkmale)))
-; Gibt true zurück wenn m1 dominanter ist, sonst false. Wenn beide gleich sind dann auch true.
-(define (vergleiche-dominanz m1 m2) (let ([types (get-m-type-list m1)])
-                                      (<= (index-of types m1) (index-of types m2))))
-(get-m-type-list 'rot)
-(finde-rezessive-m 'gekruemmt)
-(vergleiche-dominanz 'rot 'rot)
+; Hilfsmethode: Gibt zu einem Übergebenen Symbol die Liste zurück in der sie sich befindet
+(define (get-m-type-list m)
+  (car(memf(lambda (arg) (member m arg))merkmale)))
 
-; Hilfsmethode: liefert zufälliges Element zurück
+
+; 2)
+; Gibt true zurück wenn m1 dominanter ist, sonst false. Wenn beide gleich sind dann auch true.
+(define (vergleiche-dominanz m1 m2)
+  (let ([types (get-m-type-list m1)])
+  (<= (index-of types m1) (index-of types m2))))
+
+
+; 3) 
+; Hilfsmethode: liefert zufälliges Element zurück.
+; Wobei zunächst eine Unterliste ausgewählt wird, die anschließend gemischt wird.
+; Abschließen zieht man das erste Element der gemischten liste.
 (define (randomElement liste)
-  (list-ref liste (random (length liste))))
+  (car(shuffle(list-ref liste (random (length liste))))))
 
