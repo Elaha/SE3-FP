@@ -158,4 +158,4 @@
         (cons fuehler (random-element (remove fuehler (get-m-type-list fuehler))))
         (cons fluegel (random-element (remove fluegel (get-m-type-list fluegel))))))
 
-(cons-schmetterling 'red 'star 'curly 'hexagon)
+(cons-schmetterling 'rot 'sterne 'geschweift 'hexagonal)
