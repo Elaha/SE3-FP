@@ -56,10 +56,10 @@
 
 (define merkmale
    (list 
-    (list 'sterne 'punkte 'streifen)           ; Musterung
-    (list 'blau 'gruen 'gelb 'rot)              ; Farbe
-    (list 'gekruemmt 'geschweift 'gerade)       ; Fühlerform
-    (list 'elliptisch 'rhombisch 'hexagonal)))   ; Flügelform
+    (list 'star 'dots 'stripes)           ; Musterung
+    (list 'blue 'green 'yellow 'red)              ; Farbe
+    (list 'curved 'curly 'straight)       ; Fühlerform
+    (list 'ellipse 'rhomb 'hexagon)))   ; Flügelform
 
 ; 2) Datenstruktur Schmetterling
 
@@ -104,7 +104,7 @@
 ; Aufgabe 1.2
 
 (require racket/trace)
-
+(require se3-bib/butterfly-module)
 ; 1)
 ; Findet alle rezessiven Merkmale zu einem gegebenen Merkmal
 (define (finde-rezessive-m m)
@@ -112,7 +112,7 @@
 
 ; Hilfsmethode: Gibt zu einem Übergebenen Symbol die Liste zurück in der sie sich befindet
 (define (get-m-type-list m)
-  (car(memf(lambda (arg) (member m arg))merkmale)))
+  (car (memf (lambda (arg) (member m arg)) merkmale)))
 
 
 ; 2)
@@ -126,6 +126,13 @@
 ; Hilfsmethode: liefert zufälliges Element zurück.
 ; Wobei zunächst eine Unterliste ausgewählt wird, die anschließend gemischt wird.
 ; Abschließen zieht man das erste Element der gemischten liste.
-(define (randomElement liste)
-  (car(shuffle(list-ref liste (random (length liste))))))
+(define (random-element liste)
+  (list-ref liste (random (length liste))))
 
+(define (cons-schmetterling farbe muster fuehler fluegel)
+  (list (cons farbe (random-element (remove farbe (get-m-type-list farbe))))
+        (cons muster (random-element (remove muster (get-m-type-list muster))))
+        (cons fuehler (random-element (remove fuehler (get-m-type-list fuehler))))
+        (cons fluegel (random-element (remove fluegel (get-m-type-list fluegel))))))
+
+(cons-schmetterling 'red 'star 'curly 'hexagon)
