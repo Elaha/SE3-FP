@@ -28,75 +28,96 @@
 ; 1) Datenstruktur Merkmale
 
 ; Im Rahmen der Aufgabe, eignet sich eine Liste als Datenstruktur am besten.
-; Hierbei kann für jede Eigentschaft (Musterung, Flügelfarbe, Fühlerform, Flügelform) eine
+; Denn es kann für jede Eigentschaft (Musterung, Flügelfarbe, Fühlerform, Flügelform) eine
 ; eigene Unterliste in der Liste erstellt werden.
 ; Hierbei könnte man die Unterlisten in einer bestimmten Rheinfolge anordnen.
 ; Es bietet sich an sie von dominant -> reszesiv zu ordnen.
 ; Denn jetzt könnte man durch verschiedene Operationen wie Beispielsweise car oder cdr
 ; durch die Liste navigieren und auf bestimmte Elemente zugreifen.
+
 (define fluegelform 3)
 (define fuellerform 2)
 (define farbe 1)
 (define musterung 0)
 
-(define sterne 0)
-(define punkte 0)
-(define streifen 0)
-(define gruen 1)
-(define rot 1)
-(define gelb 1)
-(define blau 1)
-(define gekruemmt 2)
-(define geschweift 2)
-(define gerade 2)
-(define ellipitisch 3)
-(define rhombisch 3)
-(define hexagonal 3)
-
-
 (define merkmale
    (list 
-    (list 'star 'dots 'stripes)           ; Musterung
-    (list 'blue 'green 'yellow 'red)              ; Farbe
-    (list 'curved 'curly 'straight)       ; Fühlerform
-    (list 'ellipse 'rhomb 'hexagon)))   ; Flügelform
+    (list 'sterne 'punkte 'streifen)           ; Musterung
+    (list 'blau 'gruen 'gelb 'rot)              ; Farbe
+    (list 'gekruemmt 'geschweift 'gerade)       ; Fühlerform
+    (list 'elliptisch 'rhombisch 'hexagonal)))   ; Flügelform
 
 ; 2) Datenstruktur Schmetterling
 
 ; Für die Darstellung des Schmetterlings, bietet sich wieder eine Liste an.
 ; Die Liste sollte der Sortierung (Musterung, Farbe, Fühlerform, Flügelform),
 ; der obrigen Liste "Merkmale" entsprechen.
-; Wobei wir hier nur 4 konkrete Elemente Übergeben (eins für jede Eigenschaft).
-; Mit der Funktion show-butterfly können wir uns dann diesen Schmetterling anzeigen lassen.
+; Wobei wir in der Liste für jede Eigenschaft, je zwei Elmente Speichern (Für dominant und rezessiv).
+; Somit hätten wir wieder 4 Unterlisten, mit jeweils 2 Elmenten.
+; Mit der Funktion show-butterfly, können wir uns dann ganz einfach durch den Aufruf mit Car für jede Eigenschaft
+; das dominante Merkmal, des Schmetterlings anzeigen lassen. 
+; Die Liste sollte im späteren Verlauf der Aufgabe, durch die Funktion "cons-schmetterling"
+; erstellt werden.
 
-; (define Schmetterling
-;   (List Musterung, Farbe, Fühlerform, Flügelform)
+; (Musterung, Farbe, Fühlerform, Flügelform)
+; Beispiel: '((blau.rot) (sterne.streifen) (gerade.gekruemmt) (hexagonal.elliptisch)) 
 
 ; 3) Gliederung
 
 ; Diese Gliederung bezieht sich auf die Teilaufgaben in Aufgabe 1.2.
-; 1)
+
+; 1.
+
 ; Für die erste Teilaufgabe muss jedes Elment was eine geringere Mächtigkeit hat, Ausgegeben werden.
-; -> Eingabe: Merkmal
+; -> Name: finde-rezessiv-m 
+; -> Eingabe: m (m stellt ein Merkmal dar wie z.B. blau oder gerade)
 
-; 2)
-; Herausfinden welche der beiden Merkmale einen höheren Stellenwert hat
-; -> Eingabe: Merkmal 1 , Merkmal 2
+; Hilfsfunktion)
 
-; 3)
+; Für die obere Funktion, kann noch eine Hilfsmethode definiert werden, die für ein gegebenes Merkmal,
+; die passende Unterliste findet.
+; Diese kann man in unserer oberen Funktion Aufrufen. Mit cdr kann für das übergebeben Merkmal, die Restliste
+; ermittelt werden, welche somit die resseziven Merkmale zu einem gegebenen m liefern würde.
+; -> Name: get-m-type-list
+; -> Eingabe: m (m steht wieder für Merkmal)
+
+; 2.
+
+; Herausfinden welche der beiden Merkmale einen höheren Stellenwert in der Liste hat bzw. welcher
+; der Merkmale in der jeweiligen Unterliste, weiter links steht.
+; In dieser Funktion könnten wir wieder die obrige Hilfsfunktion aufrufen mit dessen Hilfe wir die
+; Unterliste erhalten.
+; Anschließend könnten so 2 Merkmale auf ihre Indexnummern verglichen werden um herauszufinden, welche
+; der Merkmale sich weiter links in der Unterliste befindet.
+; -> Name: vergleiche-dominanz
+; -> Eingabe: m1 m2 (Merkmal 1 und Merkmal 2)
+
+; 3.
+
 ; Die Eigentliche Funktion die ein Schmetterling erzeugt, sollte hier nur die verschiedenen
-; Merkmale entgegennehmen und sie auf die Schmetterling - Liste mappen.
+; Merkmale (Farbe, Muster, Fühler, Flügel) entgegennehmen und so die Liste die in Aufgabe 1.2 gewählt wurde, zusammensetzen.
 ; Zusätzlich sollte eine Hilfsmethode definiert werden, die zuällige Elemente aus der Merkmale-Liste
-; wählt, die nicht dominant sind.
-; -> Eingabe für Schmetterling erzeugen: dominant1, dominant2
-; -> Eingabe für Hilfsmethode: Liste (Merkmale)
+; wählt die rezessiv sind.
+; Diese könnten wir dann einfach in unserer Hauptfunktion "cons-schmetterling" aufrufen.
+; -> Name: cons-schmetterling
+; -> Eingabe: farbe, muster, fuehler, fluegel (Übergabe der Dominanten Eigenschaften)
 
-; 4)
+; Hilfsfunktion)
+
+; Hilfsfunktion für die Auswahl der rezessiven Merkmale
+; -> Name: random-element
+; -> Eingabe: liste (Wir übergeben unsere "merkmale" Liste).
+
+; 4.
 ; Rückgabe der erzeugten Liste, durch übergabe der Funktion Schmetterling erzeugen.
 ; -> Eingabe: Funktion --> schmetterlingErzeugen
 
-; 5)
-; Durch Funktionsaufruf show-butterfly
+; 5.
+; Durch die vordefinierte Funktion show-butterfly sollten wir unseren Schmetterling einfach
+; Anzeigen lassen können.
+; Wir sollten hierbei wie oben schon erwähnt durch car in der lage sein, show-butterfly die dominanten
+; Merkmale unseres Schmetterlings zu übergeben.
+; -> Name: show-butterfly
 ; -> Eingabe: Schmetterling (Liste)
 
 
