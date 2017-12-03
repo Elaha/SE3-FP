@@ -68,7 +68,9 @@
 
 ; 1.
 
-; Für die erste Teilaufgabe muss jedes Elment was eine geringere Mächtigkeit hat, Ausgegeben werden.
+; Für die erste Teilaufgabe muss jedes Element was eine geringere Mächtigkeit hat, Ausgegeben werden.
+; Hierbei können wir ein Merkmal übergeben und mit cdr die Restliste aufrufen.
+; Diese Restliste, sollte uns somit die rezessiven Merkmale liefern.
 ; -> Name: finde-rezessiv-m 
 ; -> Eingabe: m (m stellt ein Merkmal dar wie z.B. blau oder gerade)
 
