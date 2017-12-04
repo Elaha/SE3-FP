@@ -25,11 +25,10 @@
 
 (require se3-bib/butterfly-module)
 
-
-(define fluegelform 3)
-(define fuellerform 2)
-(define farbe 1)
 (define musterung 0)
+(define farbe 1)
+(define fuellerform 2)
+(define fluegelform 3)
 
 
 ; 1.1 Analyse & Grobentwurf
@@ -177,26 +176,25 @@
   (<= (index-of types m1) (index-of types m2))))
 
 
-; 3) 
+; 3) Hauptfunktion: erstellt ein Schmetterling.
 ; Hilfsmethode: liefert ein zuälliges Element aus einer gegebenen Liste zurück.
 (define (random-element liste)
   (list-ref liste (random (length liste))))
 
-; 3) Hauptfunktion: erstellt ein Schmetterling.
-; 4) Alle dominanten und rezessiven Merkmale für ein Schmetterling werden ausgegeben.
-; 5) Der erzeugte Schmetterling wird Angezeigt.
 (define (cons-schmetterling farbe muster fuehler fluegel)
-(let
-  ([schmetterling
-        (list (cons farbe (random-element (remove farbe (get-m-type-list farbe))))
-              (cons muster (random-element (remove muster (get-m-type-list muster))))
-              (cons fuehler (random-element (remove fuehler (get-m-type-list fuehler))))
-              (cons fluegel (random-element (remove fluegel (get-m-type-list fluegel)))))])
+  (list (cons farbe (random-element (remove farbe (get-m-type-list farbe))))
+        (cons muster (random-element (remove muster (get-m-type-list muster))))
+        (cons fuehler (random-element (remove fuehler (get-m-type-list fuehler))))
+        (cons fluegel (random-element (remove fluegel (get-m-type-list fluegel))))))
+ 
+; 4) Alle dominanten und rezessiven Merkmale für ein Schmetterling werden ausgegeben.
+(define (gib-dominante schmetterling) (map (lambda (merkmaltyp) (car merkmaltyp)) schmetterling))
+(define (gib-rezessive schmetterling) (map (lambda (merkmaltyp) (cdr merkmaltyp)) schmetterling))
 
-  ; 4 Gibt alle dominanten und rezessiven Gene eines Schmetterlings aus.
-  (print schmetterling)
-  ; 5) Anzeigen eines Schmetterlings
-  (show-butterfly (car(list-ref schmetterling 0)) (car(list-ref schmetterling 1)) (car(list-ref schmetterling 2)) (car(list-ref schmetterling 3))))
-  
-  )
+; 5) Anzeigen eines Schmetterlings
+(define (show-schmetterling schmetterling) (show-butterfly (car(list-ref schmetterling 0)) (car(list-ref schmetterling 1)) (car(list-ref schmetterling 2)) (car(list-ref schmetterling 3))))
 
+(define schmetterling1 (cons-schmetterling 'red 'star 'curly 'hexagon))
+(gib-dominante schmetterling1)
+(gib-rezessive schmetterling1)
+(show-schmetterling schmetterling1)
