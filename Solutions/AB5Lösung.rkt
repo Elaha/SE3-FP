@@ -1,5 +1,8 @@
 #lang racket
 
+; Jan Ouborny 7047561
+; Ozan Boga 6689640
+; Elaha Khaleqi 6947801
 
 ;Aufgabe 1
 
@@ -23,6 +26,12 @@
 (require se3-bib/butterfly-module)
 
 
+(define fluegelform 3)
+(define fuellerform 2)
+(define farbe 1)
+(define musterung 0)
+
+
 ; 1.1 Analyse & Grobentwurf
 
 ; 1) Datenstruktur Merkmale
@@ -34,29 +43,27 @@
 ; Es bietet sich an sie von dominant -> reszesiv zu ordnen.
 ; Denn jetzt könnte man durch verschiedene Operationen wie Beispielsweise car oder cdr
 ; durch die Liste navigieren und auf bestimmte Elemente zugreifen.
+; Gleichzeitig sind vordefinierte Operationen wie "string-ref" oder "remove" die auf Listen
+; angewant werden können, für die folgenden Aufgaben wichtig.
 
-(define fluegelform 3)
-(define fuellerform 2)
-(define farbe 1)
-(define musterung 0)
 
 (define merkmale
    (list 
-    (list 'sterne 'punkte 'streifen)           ; Musterung
-    (list 'blau 'gruen 'gelb 'rot)              ; Farbe
-    (list 'gekruemmt 'geschweift 'gerade)       ; Fühlerform
-    (list 'elliptisch 'rhombisch 'hexagonal)))   ; Flügelform
+    (list 'star 'dots 'stripes)           ; Musterung
+    (list 'blue 'green 'yellow 'red)      ; Farbe
+    (list 'curved 'curly 'straight)       ; Fühlerform
+    (list 'ellipse 'rhomb 'hexagon)))     ; Flügelform
 
 ; 2) Datenstruktur Schmetterling
 
 ; Für die Darstellung des Schmetterlings, bietet sich wieder eine Liste an.
 ; Die Liste sollte der Sortierung (Musterung, Farbe, Fühlerform, Flügelform),
 ; der obrigen Liste "Merkmale" entsprechen.
-; Wobei wir in der Liste für jede Eigenschaft, je zwei Elmente Speichern (Für dominant und rezessiv).
+; Wobei wir in der Liste für jede Eigenschaft, je zwei Elemente Speichern (Für dominant und rezessiv).
 ; Somit hätten wir wieder 4 Unterlisten, mit jeweils 2 Elmenten.
-; Mit der Funktion show-butterfly, können wir uns dann ganz einfach durch den Aufruf mit Car für jede Eigenschaft
-; das dominante Merkmal, des Schmetterlings anzeigen lassen. 
-; Die Liste sollte im späteren Verlauf der Aufgabe, durch die Funktion "cons-schmetterling"
+; Mit der Funktion show-butterfly, können wir uns dann ganz einfach durch den Aufruf mit car für jede Eigenschaft
+; das dominante Merkmal des Schmetterlings, anzeigen lassen. 
+; Die Liste sollte im späteren Verlauf der Aufgabe, durch unsere Hauptfunktion "cons-schmetterling"
 ; erstellt werden.
 
 ; (Musterung, Farbe, Fühlerform, Flügelform)
@@ -68,14 +75,11 @@
 
 ; 1.
 
-; Für die erste Teilaufgabe muss jedes Element was eine geringere Mächtigkeit hat, Ausgegeben werden.
-; Hierbei können wir ein Merkmal übergeben und mit cdr die Restliste aufrufen.
-; Diese Restliste, sollte uns somit die rezessiven Merkmale liefern.
+; Für die erste Teilaufgabe muss jedes Elment was eine geringere Mächtigkeit hat, ausgegeben werden.
 ; -> Name: finde-rezessiv-m 
-; -> Eingabe: m (m stellt ein Merkmal dar wie z.B. blau oder gerade)
+; -> Eingabe: m (m stellt ein Merkmal dar, wie z.B. blau oder gerade)
 
-; Hilfsfunktion)
-
+; Hilfsfunktion:
 ; Für die obere Funktion, kann noch eine Hilfsmethode definiert werden, die für ein gegebenes Merkmal,
 ; die passende Unterliste findet.
 ; Diese kann man in unserer oberen Funktion Aufrufen. Mit cdr kann für das übergebeben Merkmal, die Restliste
@@ -87,9 +91,9 @@
 
 ; Herausfinden welche der beiden Merkmale einen höheren Stellenwert in der Liste hat bzw. welcher
 ; der Merkmale in der jeweiligen Unterliste, weiter links steht.
-; In dieser Funktion könnten wir wieder die obrige Hilfsfunktion aufrufen mit dessen Hilfe wir die
+; In dieser Funktion könnten wir wieder, die obrige Hilfsfunktion aufrufen mit dessen Hilfe wir die
 ; Unterliste erhalten.
-; Anschließend könnten so 2 Merkmale auf ihre Indexnummern verglichen werden um herauszufinden, welche
+; Anschließend könnten so zwei Merkmale auf ihre Indexnummern verglichen werden um herauszufinden, welche
 ; der Merkmale sich weiter links in der Unterliste befindet.
 ; -> Name: vergleiche-dominanz
 ; -> Eingabe: m1 m2 (Merkmal 1 und Merkmal 2)
@@ -102,17 +106,16 @@
 ; wählt die rezessiv sind.
 ; Diese könnten wir dann einfach in unserer Hauptfunktion "cons-schmetterling" aufrufen.
 ; -> Name: cons-schmetterling
-; -> Eingabe: farbe, muster, fuehler, fluegel (Übergabe der Dominanten Eigenschaften)
+; -> Eingabe: farbe muster fuehler fluegel (Übergabe der Dominanten Eigenschaften)
 
-; Hilfsfunktion)
-
-; Hilfsfunktion für die Auswahl der rezessiven Merkmale
+; Hilfsfunktion:
+; Hilfsfunktion für die Auswahl der zuällig ausgewählten rezessiven Merkmale.
 ; -> Name: random-element
 ; -> Eingabe: liste (Wir übergeben unsere "merkmale" Liste).
 
 ; 4.
-; Rückgabe der erzeugten Liste, durch übergabe der Funktion Schmetterling erzeugen.
-; -> Eingabe: Funktion --> schmetterlingErzeugen
+; Rückgabe der erzeugten Liste, welche alle Dominanten und zufällig erzeugten rezessiven Gene paarweise gespeichert haben sollte.
+; -> Eingabe: Liste (Die Liste die durch die Hauptfunktion "cons-schmetterling" erzeugt wird, sollte hier übergeben werden.
 
 ; 5.
 ; Durch die vordefinierte Funktion show-butterfly sollten wir unseren Schmetterling einfach
@@ -121,6 +124,35 @@
 ; Merkmale unseres Schmetterlings zu übergeben.
 ; -> Name: show-butterfly
 ; -> Eingabe: Schmetterling (Liste)
+
+; NACHTRAG zu Punkt 4 & 5
+; Bei diesen beiden Funktionen muss ermittelt werden, ob es mehr Sinn macht eigene Funktionen für sie zu schreiben
+; oder ob es besser ist, sie direkt in der Hauptfunktion "cons-schmetterling" zu implementieren. Denn bei der zweiten Varianten
+; also der direkten implementation in der Hauptfunktion, es wahrscheinlich leichter ist, auf die durch "cons-schmetterling"
+; erzeugte List zuzugreifen.
+
+; 6.
+; Hier macht es Sinn, 2 Listen zu übergeben und zusätzlich die Anzahl der Kinder zu bestimmen, die erzeugt werden soll.
+; Zusätzlich sollte man für jede Eigenschaft (farbe, Muster, Fühler, Flügel), eine der beiden Merkamle die zur Auswahl stehen,
+; zufällig wählen.
+; Hierzu kann man eine Hilfsfunktion definieren, die Zwei zufällige listen (Für Vater und Mutter)
+; erstellt durch die, die Kinder später erzeugt werden.
+; Aus diesen beiden Listen kann dann später in der erzeugeKind Funktion, mithilfe der oben definierten Hilfsfunktion "random-element" Funktion,
+; zuällig aus beiden Listen gezogen werden.
+; -> Name: erzeugeKind
+; -> Eingabe: liste liste n (Jeweils eine Liste für den Vater und für die Mutter, n für die Anzahl der Kinder)
+
+; Hilfsfunktion:
+; Wir können hier wieder unsere random-element Funktion von oben nehmen und etwas modifizieren.
+; So dass, aus allen 4 Unterlisten von der Liste "merkmale" einmal gezogen wird.
+; Dieser Vorgang könnte mittels rekusion implementiert werden.
+; -> Eingabe: Liste ("merkmale"-Liste)
+
+; 7.
+; Hier können wir mithilfe von der "show-butterfly" Funktion alle Kinder anzeigen.
+; Durch print können dann zusätzlich die Merkmale der jeweiligen Schmetterlinge ausgegeben werden.
+; -> Diese Funktionen können in der Hauptfunktion "erzeugeKind" implementiert werden.
+
 
 
 
@@ -146,16 +178,25 @@
 
 
 ; 3) 
-; Hilfsmethode: liefert zufälliges Element zurück.
-; Wobei zunächst eine Unterliste ausgewählt wird, die anschließend gemischt wird.
-; Abschließen zieht man das erste Element der gemischten liste.
+; Hilfsmethode: liefert ein zuälliges Element aus einer gegebenen Liste zurück.
 (define (random-element liste)
   (list-ref liste (random (length liste))))
 
+; 3) Hauptfunktion: erstellt ein Schmetterling.
+; 4) Alle dominanten und rezessiven Merkmale für ein Schmetterling werden ausgegeben.
+; 5) Der erzeugte Schmetterling wird Angezeigt.
 (define (cons-schmetterling farbe muster fuehler fluegel)
-  (list (cons farbe (random-element (remove farbe (get-m-type-list farbe))))
-        (cons muster (random-element (remove muster (get-m-type-list muster))))
-        (cons fuehler (random-element (remove fuehler (get-m-type-list fuehler))))
-        (cons fluegel (random-element (remove fluegel (get-m-type-list fluegel))))))
+(let
+  ([schmetterling
+        (list (cons farbe (random-element (remove farbe (get-m-type-list farbe))))
+              (cons muster (random-element (remove muster (get-m-type-list muster))))
+              (cons fuehler (random-element (remove fuehler (get-m-type-list fuehler))))
+              (cons fluegel (random-element (remove fluegel (get-m-type-list fluegel)))))])
 
-(cons-schmetterling 'rot 'sterne 'geschweift 'hexagonal)
+  ; 4 Gibt alle dominanten und rezessiven Gene eines Schmetterlings aus.
+  (print schmetterling)
+  ; 5) Anzeigen eines Schmetterlings
+  (show-butterfly (car(list-ref schmetterling 0)) (car(list-ref schmetterling 1)) (car(list-ref schmetterling 2)) (car(list-ref schmetterling 3))))
+  
+  )
+
