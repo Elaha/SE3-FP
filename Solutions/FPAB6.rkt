@@ -38,6 +38,26 @@
 ; -> Endrekursiv: Denn hier wird nach dem rekursiven Aufruf keine weitere Berechnung/Operation mehr
 ;                 mit dem Ergebnis durchgeführt.
 
+;Aufgabe 1.3
+
+;Original take-Funktion
+(define (take n xs) ;; das Kopfstueck einer Liste: die ersten n Elemente
+  (cond ((null? xs) '()) ((= 0 n) '()) (else (cons (car xs) (take (- n 1) (cdr xs))))))
+
+
+;endrekursive take-Funktion
+;die Funktion arbeitet mit einem Akkumulator, der alle Ergebnisse zwischenspeichert 
+;die Funktion take arbeitet mit einer Hilfsfunktion take-helper, die den Akkumulator enthält 
+(define (take1 n xs)
+    (letrec
+      ([take-helper (lambda (n xs acc)
+                    (cond
+                      ((null? xs) acc)
+                      ((= 0 n) acc)
+                    (else  (cons (car xs) (take-helper (- n 1) (cdr xs)acc)))))])
+                                                       
+      (take-helper n xs '())))
+
 ; -> direkte Rekursion: Denn auch hier wird mit keiner anderen Funktion, ein wechselseitiger Aufruf
 ;                       durchgeführt.
 
@@ -69,7 +89,25 @@
 ; Denn sie nehmen beide die Funktion rel<? entgegen, die eine Ordnungsrelation definiert,
 ; nach der die Listen sortiert werden sollen.
 
+;Aufgabe 1.3
 
+;Original take-Funktion
+(define (take n xs) ;; das Kopfstueck einer Liste: die ersten n Elemente
+  (cond ((null? xs) '()) ((= 0 n) '()) (else (cons (car xs) (take (- n 1) (cdr xs))))))
+
+
+;endrekursive take1-Funktion
+;die Funktion arbeitet mit einem Akkumulator, der alle Ergebnisse zwischenspeichert 
+;die Funktion take1 arbeitet mit einer Hilfsfunktion take-helper, die den Akkumulator enthält 
+(define (take1 n xs)
+    (letrec
+      ([take-helper (lambda (n xs acc)
+                    (cond
+                      ((null? xs) acc)
+                      ((= 0 n) acc)
+                    (else  (cons (car xs) (take-helper (- n 1) (cdr xs)acc)))))])
+                                                       
+      (take-helper n xs '())))
 
 
 (require 2htdp/image)
