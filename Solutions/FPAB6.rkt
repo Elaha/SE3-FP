@@ -90,4 +90,28 @@
       (take-helper n xs '())))
 
 
+
+
+; Aufgabe 2
+
 (require 2htdp/image)
+(require 2htdp/universe)
+
+(empty-scene 800 600 "blue")
+
+(define Weinachtsbaum(above/align "center"
+    (star-polygon 25 5 2 "solid" "yellow")
+(overlay/xy
+(overlay/xy
+(overlay/xy
+(overlay/xy 
+    (triangle 20 "solid" "seagreen")
+    -10 10
+    (triangle 40 "solid" "seagreen"))
+    -10 25
+    (triangle 60 "solid" "seagreen"))
+    -10 50
+    (triangle 80 "solid" "seagreen"))
+    -10 80
+    (triangle 100 "solid" "seagreen"))
+    (rectangle 20 40 "solid" "brown")))
