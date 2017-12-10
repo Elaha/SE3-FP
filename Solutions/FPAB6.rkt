@@ -92,12 +92,24 @@
 
 
 
+
+
 ; Aufgabe 2
+
 
 (require 2htdp/image)
 (require 2htdp/universe)
 
-(empty-scene 800 600 "blue")
+(define hoehe 600)
+(define breite 400)
+
+(define hintergrund(rectangle 600 400 "solid" "blue"))
+
+(define schneehügelmond
+  (underlay
+
+   (place-image (circle 50 "solid" "white")500 75 hintergrund)
+   (place-image (ellipse 1000 100 "solid" "white") 300 370 hintergrund)))
 
 (define Weinachtsbaum(above/align "center"
     (star-polygon 25 5 2 "solid" "yellow")
@@ -115,3 +127,12 @@
     -10 80
     (triangle 100 "solid" "seagreen"))
     (rectangle 20 40 "solid" "brown")))
+
+
+(define (zeige-bild)
+  (underlay
+   schneehügelmond
+   Weinachtsbaum))
+
+(zeige-bild)
+
