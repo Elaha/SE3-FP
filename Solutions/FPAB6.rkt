@@ -1,5 +1,12 @@
 #lang racket
 
+
+; Jan Ouborny 7047561
+; Ozan Boga 6689640
+; Elaha Khaleqi 6947801
+
+
+
 ; Aufgabe 1
 
 
