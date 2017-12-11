@@ -112,11 +112,12 @@
    (place-image (ellipse 1000 100 "solid" "white") 300 370 hintergrund)))
 
 (define Weinachtsbaum(above/align "center"
-    (star-polygon 25 5 2 "solid" "yellow")
+    (star-polygon 25 5 2 "solid" "yellow") ; Baumspitze
 (overlay/xy
 (overlay/xy
 (overlay/xy
-(overlay/xy 
+(overlay/xy
+ ; Zweige
     (triangle 20 "solid" "seagreen")
     -10 10
     (triangle 40 "solid" "seagreen"))
@@ -135,4 +136,3 @@
    Weinachtsbaum))
 
 (zeige-bild)
-
