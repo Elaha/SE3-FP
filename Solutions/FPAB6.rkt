@@ -6,27 +6,26 @@
 
 ; Endrekursion: Wenn Funktion nur aus einem elementaren Fall & einer rekusiven
 ;               Verwendung der Funktion besteht.
-;               Hinter dem rekursivon Aufruf steht keine weitere Funktion.
+;               Hinter dem rekursiven Aufruf steht keine weitere Funktion.
 ;               Nach der Rekursion wird mit dem Ergebnis keine weitere Berechnung durchgeführt.
 ;                 
 
 ; Lineare rekusion: Eine Funktion die sich in jeder Fallunterscheidung selbst nur
 ;                   einmal verwendet.
-;                   Also im else wird die Rekursion aufgerufen, aber danach kann noch
-;                   etwas mit dem Ergebnis der Rekursion geschehen. Also es kann eine
-;                   eine weitere Funktion hinter der Rekursion stehen.
+;                   Nach dem rekursiven Aufruf, können noch weitere 
+;                   Operationen/Berechnungen mit dem Ergebnis der Rekursion durchgeführt werden.
 
 
 ; indirekte Rekursion: wenn 2 oder meherere Funktionen sich wechselseitig rekursiv verwenden.
 
-; Baumartige Rekurison: Wenn in der Definition in einer Fallunterscheidung mehrfach
-;                       auf die Definition bezug genommen wird.
+; Baumartige Rekurison: Wenn innerhalb einer Fallunterscheidung, die Funktion sich mehr als einmal, 
+;                       selber rekursiv Aufruft.
 
 
 ; Aufgabe 1.1 
 
 ; 1) #take:
-; -> Lineare Rekursion: Denn die Rekursion verwendet sich selber nur ein Mal.
+; -> Lineare Rekursion: Denn die Rekursion verwendet sich selber nur einmal.
 ;                       Nach dem rekursiven Aufruf, werden (durch cons) mit dem Ergebnis der Rekursion,
 ;                       noch weitere Berechnungen durchgeführt.
 
@@ -42,7 +41,7 @@
 ;                       durchgeführt.
 
 ; 3) #merge
-; -> Lineare Rekursion: Durch die unterinanderreihung der rekursiven Aufrufe scheint es so
+; -> Lineare Rekursion: Durch die Unterinanderreihung der rekursiven Aufrufe scheint es so,
 ;                       als wäre es eine Baumrekursion, jedoch wird nach dem if für jede Fallunterscheidung,
 ;                       lediglich nur ein rekursiver Aufruf definiert.
 ;                       Ein weiterer Grund für die lineare Rekursion ist hierbei auch,
@@ -53,12 +52,12 @@
 
 ; 4) #merge-sort
 ; -> Baumrekurison: Denn in diesem Fall, ruft sich merge-sort innerhalb einer Fallunterscheidung,
-;                   zwei Mal selber auf.
+;                   zweimal selber auf.
 
 ; -> direkte Rekursion: Hier werden zwar andere rekursive Funktionen wie "take", "drop" oder "merge" aufgerufen,
 ;                       jedoch rufen diese merge-sort nicht wieder auf.
-;                       Aus diesem Grund besteht kein wechselseitiger, sondern nur ein einseitiger Aufruf der Funktionen und somit
-;                       auch keine indirekte Rekursion.
+;                       Aus diesem Grund besteht kein wechselseitiger, sondern nur ein einseitiger Aufruf der Funktionen 
+;                       und somit auch keine indirekte Rekursion.
 
 
 ; Aufgabe 1.2
