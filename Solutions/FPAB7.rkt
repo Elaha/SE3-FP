@@ -1,4 +1,18 @@
 #lang racket
+
+; Aufgabe 1
+
+
+
+(define xs
+  '(1 2 1 3 4 2))
+
+; Dargestellt als Funktion höherer Ordnung
+(define (filterer y xs)
+  (length(filter (lambda (x) (= x y)) xs)))
+
+; Aufgabe 2
+
 (require racket/trace)
 ; Creates a list with lists for each row
 (define (create-field-v1 cells [field '()]) 
