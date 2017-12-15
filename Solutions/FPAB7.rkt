@@ -6,6 +6,15 @@
 
 (define xs
   '(1 2 1 3 4 2))
+  
+  
+; Ansatz für rekursive Funktion
+; TODO: länge muss von der Endliste berechnet werden (länge der Endliste = Anzahl des gegebenen Elements, in der Liste) 
+(define (zählenrek y xs)
+(cond ((null? xs) '())
+      ((not(equal? y (car xs))) (zählenrek y (cdr xs)))
+      (else (cons (car xs) (zählenrek y (cdr xs))))))
+         
 
 ; Dargestellt als Funktion höherer Ordnung
 (define (filterer y xs)
