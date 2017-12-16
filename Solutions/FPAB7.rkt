@@ -7,6 +7,16 @@
 (define xs
   '(1 2 1 3 4 2))
   
+ ; die Funktionen arbeitet mit einem zusätzlichem Parameter "zaehler" 
+ ;das Vorkommen eines Elements in der Liste wird gezählt und der zaehler wird dann jeweils um einen hochgezählt
+ ; zu Beginn hat der zaehler den Inhalt 0 
+(define (zaehlen n xs zaehler)
+(cond ((null? xs) zaehler)
+      ((equal? n (car xs))
+       (zaehlen n (cdr xs) add1 zaehler))
+      (else (zaehlen n xs (cdr xs)(zaehler)))))
+  
+  (zaehlen 2 '(1 2 1 3 4 2) 0)
   
 ; Ansatz für rekursive Funktion
 ; TODO: länge muss von der Endliste berechnet werden (länge der Endliste = Anzahl des gegebenen Elements, in der Liste) 
